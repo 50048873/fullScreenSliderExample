@@ -1,0 +1,252 @@
+.noFooter { 
+	padding-bottom: 0;
+}
+/*宫格*/
+.content { 
+	margin: 0.15rem 0;
+	background-color: @white;
+	a { 
+		float: left;
+		border-right: 1px solid @e3e3e3;
+		border-bottom: 1px solid @e3e3e3;
+		position: relative;
+		overflow: hidden;
+		h3 { 
+			margin-left: 0.2rem;
+			color: @black;
+		}
+	}
+	a:nth-child(2n) { 
+		border-right: none;
+	}
+	a:nth-last-child(1) { 
+		border-bottom: none;
+	}
+	a:nth-last-child(2) { 
+		border-bottom: none;
+	}
+}
+.emphasize { 
+	position: absolute;
+	width: 100%;
+	padding-top: 0.01rem;
+	background-color: @e85c49;
+	color: @white;
+	text-align: center;
+	-webkit-transform-origin: top center;
+	transform-origin: top center;
+	-webkit-transform: rotate(45deg) scale(0.7) translate(0, 20px);
+	transform: rotate(45deg) scale(0.7) translate(0, 20px);
+	top: 0;
+	left: 50%;
+}
+/*遮罩*/
+.mask { 
+	position: fixed;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	z-index: 2;
+	background: rgba(0, 0, 0, 0.7);
+	display: none;
+}
+/*带月亮的分享*/
+.shareWithMooon { 
+	p { 
+		font-size: 0.16rem;
+		color: @ff9a00;
+		text-align: center;
+	}
+	.moon { 
+		text-align: right;
+		margin-bottom: 0.1rem;
+		img { 
+			height: 0.5rem;
+			margin-top: 3%;
+			margin-right: 5%;
+		}
+	}
+}
+.title_h3 { 
+	background-color: @8dc893;
+	font-size: 0.14rem;
+	color: @white;
+	padding: 0.1rem;
+	margin-bottom: 0.2rem;
+	img { 
+		height: 0.2rem;
+		margin-right: 0.1rem;
+	}
+}
+/*图表*/
+.graph { 
+	background-color: @white;
+}
+/*按钮*/
+.btns { 
+	text-align: center;
+	padding: 0.06rem 0 0.1rem;
+	a { 
+		background: url(../img/ma-7.png) no-repeat center center;
+		background-size: 100% 100%;
+		display: inline-block;
+		padding: 0.08rem 0.25rem;
+		color: @f76f4b;
+		font-size: 0.14rem;
+		font-weight: bold;
+		letter-spacing: 1px;
+		margin: 0.05rem;
+		&:hover { 
+			color: red;
+		}
+	}
+}
+/*遮罩内容弹出层*/
+.popupLayer_container { 
+	display: -webkit-box;
+	-webkit-box-pack: center;
+	-webkit-box-align: center;
+	height: 100%;
+	overflow: auto;
+	.popupLayer { 
+		width: 100%;
+	}
+	h3 { 
+		background-color: #f2463f;
+		background-image: -webkit-linear-gradient(#f2463f, #f7704b);
+		border-radius: 0.1rem 0.1rem 0 0;
+		border-bottom: 4px solid #f2463f;
+		width: 87.5%;
+		height: 0.5rem;
+		line-height: 0.5rem;
+		margin: 0 auto;
+		font-size: 0.22rem;
+		color: @white;
+		text-align: center;
+		position: relative;
+		z-index: 2;
+		text-shadow: 3px 3px 2px #e90c0c;
+		img { 
+			position: absolute;
+			top: 30%;
+			right: 0.1rem;
+			height: 40%;
+			cursor: pointer;
+		}
+	}
+	.pl_con { 
+		background-color: @white;
+		border-radius: 0 0 0.1rem 0.1rem;
+		width: 84.375%;
+		min-height: 1rem;
+		margin: -1px auto 0;
+		padding: 0.15rem;
+		position: relative;
+		text-align: center;
+		.left, .right { 
+			position: absolute;
+			top: -0.24rem;
+			height: 0.3rem;
+		}
+		.left { 
+			right: 100%;
+		}
+		.right { 
+			left: 100%;
+			-webkit-transform: rotate(180deg);
+			        transform: rotate(180deg);
+		}
+		.decaration { 
+			position: absolute;
+			z-index: 1;
+			top: -0.06rem;
+			left: 3%;
+			width: 94%;
+		}
+		.shadow { 
+			width: 50%;
+			height: 0.15rem;
+			margin: 0 auto;
+			background-color: #e5dace;
+			border-radius: 50%;
+			margin-top: -0.1rem;
+		}
+		p { 
+			font-size: 0.12rem;
+			color: @f2473f;
+		}
+		.chance { 
+			font-size: 0.16rem;
+			span { 
+				padding: 0 0.05rem;
+				text-decoration: underline;
+			}
+		}
+		.btns { 
+			padding-bottom: 0;
+			a { 
+				padding-right: 0.2rem;
+				padding-left: 0.2rem;
+			}
+		}
+	}
+}
+
+#startRaffle { 
+	display: none;
+}
+#noAddSignIn { 
+	display: none;
+	p { 
+		a { 
+			display: inline;
+			color: @4095ce;
+		}
+	}
+}
+#HasAddSignIn { 
+	display: none;
+}
+#refuel { 
+	display: none;
+}
+#congratulation { 
+	display: none;
+}
+#houseNumber { 
+	display: none;
+}
+
+/*户号选择*/
+.houseNumber { 
+	text-align: center;
+	margin-top: 0.1rem;
+	li { 
+		.i-checks { 
+			display: inline-block;
+			padding: 0.08rem 0.3rem;
+			border-bottom: 1px solid @e5e5e5;
+			text-align: left;
+		}
+	}
+	.houseName { 
+		display: inline-block;
+		margin-left: 0.05rem;
+		width: 0.60rem;
+	}
+}
+
+#sg_tooltip { 
+	.tooltip_text { 
+		font-size: 0.16rem;
+		color: @f2473f;
+		text-align: center;
+		p { 
+			font-size: 0.16rem;
+		}
+	}
+	.btns { 
+		padding-bottom: 0;
+	}
+}

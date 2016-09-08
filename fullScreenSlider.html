@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html class="fullScreenSlider">
+<head>
+	<meta charset="UTF-8" />
+	<title>多页全屏滚动</title>
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge, chrome=1" />
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no" />
+	<!-- 让应用可以在apple上全屏 -->
+	<meta name='apple-touch-fullscreen' content="yes" />
+	<link rel="apple-touch-icon" href="img/favicon.png">
+	<link rel="icon" type="image/png" href="img/favicon.png">
+	<link rel="stylesheet" type="text/css" href="css/fullScreenSlider.css" />
+</head>
+<body>
+	<nav class="horizontalDot">
+		<span class="active"></span>
+		<span></span>
+		<span></span>
+		<span></span>
+	</nav>
+	<div class="page-container">
+		<section class="page animated active">
+			<div class="moon">
+				<img class="animated fadeInRight" src="img/s1-2.png" alt="tu">
+				<img class="animated hinge fadeIn" src="img/s1-3.png" alt="tu">
+			</div>
+			<img class="s1-4 animated rollIn" src="img/s1-4.png" alt="tu">
+			<img class="s1-5 animated fadeInRight" src="img/s1-5.png" alt="tu">
+			<img class="s1-6 animated fadeInRight" src="img/s1-6.png" alt="tu">
+			<img class="s1-7 animated fadeInLeft" src="img/s1-7.png" alt="tu">
+			<p class="title">国网湖北省电力公司</p>
+			<img class="s1-9 animated hinge fadeInRightOut" src="img/s1-9.png" alt="tu">
+		</section>
+		<section class="page animated">
+			<img class="s2-2" src="img/s2-2.png" alt="tu">
+			<img class="s2-3 animated fadeInLeft" src="img/s2-3.png" alt="tu">
+			<img class="s2-4 animated fadeInRight" src="img/s2-3.png" alt="tu">
+			<img class="s2-5 animated zoomIn" src="img/s2-4.png" alt="tu">
+			<ul class="poem" id="poem">
+				<li>一轮明月，思念无限；</li>
+				<li>一块月饼，合家团圆；</li>
+				<li>一声关怀，心心相牵；</li>
+				<li>一份相牵，情谊相连；</li>
+				<li>一个拥抱，感恩言谢；</li>
+				<li>一路走来，你在身边；</li>
+				<li>国网湖北省电力公司</li>
+				<li>祝您中秋节快乐！</li>
+			</ul>
+		</section>
+		<section class="page animated">
+			<div class="text">
+				<ul>
+					<li></li>
+					<li></li>
+					<li></li>
+					<li></li>
+				</ul>
+				<textarea name="" id="wishText" rows="4"></textarea>
+				<img class="pen animated hinge fadeInRight" src="img/pen.png" alt="tu">
+				<p class="animated hinge fadeInLeft">您还能输入<span id="left">60</span>/<span id="totalLen">60</span>个字符</p>
+			</div>
+
+			<!--div class="text animated hinge fadeInRight">
+				<textarea name="" id="wishText" rows="4" placeholder="写下您的祝福语："></textarea>
+				<img class="wish-1" src="img/wish-1.png" alt="tu">
+				<p class="animated hinge fadeInLeft">您还能输入<span id="left">60</span>/<span id="totalLen">60</span>个字符</p>
+			</div-->
+		
+			<div class="btns animated hinge slideInUp">
+				<a href="" id="share">发送祝福</a>
+			</div>
+
+			<div class="mask" id="mask_share">
+				<section class="shareWithMooon">
+					<p class="moon"><img src="img/moon.png" alt="tu"></p>
+					<p>点击右上角</p>
+					<p>分享到 微信好友 或 分享到朋友圈</p>
+				</section>
+			</div>
+		</section>
+		<section class="page animated">
+			<img class="animated zoomIn" src="img/wcpn-1.png" alt="tu">
+			<p class="animated hinge slideInUp">关注国网湖北省电力公司</p>
+			<p class="animated hinge slideInUp">微信公众服务号，参与签到抢红包</p>
+		</section>
+	</div>
+
+	<script src="bower_components/jquery/dist/jquery.min.js"></script>
+	<script src="bower_components/jquery-touchswipe/jquery.touchSwipe.min.js"></script>
+	<script src="js/fullScreenSlider.js"></script>
+	<script>
+		$(function() { 
+			$('.page-container').fullScreenSlider({ 
+				//loop: false,
+				//tb: true,
+				//lr: true
+			});
+			
+			//写祝福字数限制及提示
+			var $textarea = $('#wishText');
+			var totalLen = $('#totalLen').text() * 1;
+			var $left = $('#left');
+			var screen_height = $(window).height();
+
+			//写祝福单击事件
+			$('#page3').swipe({
+				tap: function(event, target) {
+					if (target.tagName == 'TEXTAREA') { 
+						$textarea.focus();
+						$('html').css('height', screen_height);
+					} else { 
+						$textarea.blur();
+						$('html').css('height', '100%');
+					}
+		        }
+			});
+
+			//写祝福键盘事件兼容处理
+			$(window).on('resize', function() { 
+				if ($(window).height() == screen_height) { 
+					$textarea.blur();
+				}
+				$(window).scrollTop(0);
+			});
+
+			//写祝福文字限制及提示
+			$textarea.keyup(function() { 
+				var len = $('textarea').val().length;
+				if (len > totalLen) { 
+					if ($('#sg_tooltip').length) return;
+					$.sgTooltip({ 
+						title: '字数长度提示',
+						text: '<p>您最多只能输入' + totalLen + '个字符!</p>',
+					});
+					$textarea.val($('textarea').val().substring(0, totalLen));
+
+					$('#sg_close').swipe({
+						tap: function(event, target) {
+							$('#sg_tooltip').remove();
+				        }
+					});
+
+				} else { 
+					$left.text(totalLen - len);
+				}
+			});
+			
+
+			//向好友炫耀
+			var $mask = $('#mask_share');
+			$('#share').swipe({
+				tap: function(event, target) {
+		        	event.preventDefault();
+					$mask.show();
+		        }
+			});
+
+			$mask.swipe({
+				tap: function(event, target) {
+		        	event.preventDefault();
+					$mask.hide();
+		        }
+			});
+
+			//滑动翻页
+			var index = 0;
+			var $lis = $('#poem li');
+			$('body').swipe({
+				swipe: function(event, direction, distance, duration, fingerCount) {
+					if (direction == "up" || direction == 'left') { 
+						if (index >= 3) { 
+							index = 3;
+						} else { 
+							index++;
+							move(index);
+						}
+
+						toggleWord(index);
+
+						if (index == 3) { 
+							$('.arrowUp').removeClass('fadeOutUp').addClass('fadeOutDown');
+						}
+					}
+					if (direction == 'down' || direction == "right") { 
+						if (index <= 0) { 
+							index = 0;
+						} else { 
+							index--;
+							move(index);
+						}
+
+						toggleWord(index);
+
+						if (index == 0) { 
+							$('.arrowUp').removeClass('fadeOutDown').addClass('fadeOutUp');
+						}
+					}
+				},
+				threshold: 20
+			});
+
+			function move(index) { 
+				$('.pages').css({ 
+					'-webkit-transform': 'translateY(-' + index * 100 + '%)',
+					'transform': 'translateY(-' + index * 100 + '%)'
+				});
+				$('.page').eq(index).addClass('active').siblings().removeClass('active');
+
+				$('nav div').css('width', 25 + index * 25 + '%');
+			}
+
+			//第二页typed效果
+			function typeWord() { 
+				var len = $lis.length;
+				var li = [], lis = [];
+
+				for (var i = 0; i < len; i++) { 
+					var txt = $lis[i].innerHTML;
+					var txt_len = txt.length;
+					for (var j = 0; j < txt_len; j++) { 
+						li.push('<i>' + txt[j] + '</i>');
+					}
+					lis.push('<li>' + li.join('') + '</li>');
+					li = [];
+				}
+				$('#poem').html(lis.join('')).show();
+				
+				var $i_all = $('#poem i');
+				var i_len = $('#poem i').length;
+				for (var k = 0; k < i_len; k++) { 
+					(function(k) { 
+						setTimeout(function() { 
+							$i_all.eq(k).css('opacity', '1');
+						}, 120 * k);
+					})(k)
+				}
+			}
+
+			function restoreImediatly() { 
+				setTimeout(function(){ 
+					$('#poem').html($lis);
+				}, 600);
+			}
+
+			function toggleWord(index) { 
+				if (index == 1) { 
+					typeWord();
+				} else { 
+					restoreImediatly();
+				}
+			}
+
+			document.addEventListener('touchmove',stopTouchMove,false);
+			function stopTouchMove( e ) {
+		    	e.preventDefault();
+		    }
+
+		    //第5页查看祝福
+		    function addUnderline() { 
+				var h = $('.thumb p').height();
+				var lineH = parseInt($('.thumb p').css('line-height'));
+				var pNum = h / lineH;
+				if (pNum) { 
+					var s = '';
+					for (var i = 0; i < pNum; i++) { 
+						s += '<li>　</li>';
+					}
+					$('ul').html(s);
+				}
+			}
+			addUnderline();
+
+			$(window).on('resize', function() { 
+				addUnderline();
+			});
+		});
+	</script>
+</body>
+</html>
