@@ -84,34 +84,29 @@
 			width: 1.2rem;
 			margin-left: -0.6rem;
 		}
+		.poem-container { 
+			position: absolute;
+			bottom: 8%;
+			width: 100%;
+			text-align: center;
+		}
 		.poem { 
 			color: @white;
-			font-size: 0.22rem;
-			letter-spacing: 0.02rem;
-			position: absolute;
-			bottom: 7%;
-			left: 50%;
-	    	-webkit-transform: translateX(-50%);
-	    	transform: translateX(-50%);
-			display: none;
-			writing-mode: vertical-rl;
-			-webkit-writing-mode: vertical-rl;
+			display: inline-block;
 			li { 
-				line-height: 1.8;
-				i { 
-					font-style: normal;
-					opacity: 0;
-					text-shadow: -2px -2px 1px rgba(0, 0, 0, 0.8);
-					padding-top: 2px;
-					padding-bottom: 2px;
-				}
+				float: right;
+				margin-right: 10px;
+				margin-left: 10px;
+				width: 20px;
+				//height: 0;
+				overflow: hidden;
+				font-size: 20px;
+				word-wrap: break-word;
 			}
 			li:nth-child(n+7) { 
 				margin-top: 0.06rem;
-				i { 
-					color: rgb(247, 243, 10);
-					font-size: 0.20rem;
-				}
+				color: rgb(247, 243, 10);
+				font-size: 18px;
 			}
 		}
 	}
@@ -129,7 +124,10 @@
 				background-color: @white;
 				width: 70%;
 				height: 50%;
-				line-height: 0.34rem;
+				padding: 0.1rem;
+				line-height: 1.5;
+				text-indent: 0.2rem;
+				font-size: 0.16rem;
 				position: absolute;
 				left: 10%;
 				top: 20%;

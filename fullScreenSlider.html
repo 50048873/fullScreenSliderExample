@@ -19,6 +19,7 @@
 		<span></span>
 	</nav>
 	<div class="page-container">
+	
 		<section class="page animated active">
 			<div class="moon">
 				<img class="animated fadeInRight" src="img/s1-2.png" alt="tu">
@@ -36,16 +37,18 @@
 			<img class="s2-3 animated fadeInLeft" src="img/s2-3.png" alt="tu">
 			<img class="s2-4 animated fadeInRight" src="img/s2-3.png" alt="tu">
 			<img class="s2-5 animated zoomIn" src="img/s2-4.png" alt="tu">
-			<ul class="poem" id="poem">
-				<li>一轮明月，思念无限；</li>
-				<li>一块月饼，合家团圆；</li>
-				<li>一声关怀，心心相牵；</li>
-				<li>一份相牵，情谊相连；</li>
-				<li>一个拥抱，感恩言谢；</li>
-				<li>一路走来，你在身边；</li>
-				<li>国网湖北省电力公司</li>
-				<li>祝您中秋节快乐！</li>
-			</ul>
+			<div class="poem-container">
+				<ul class="clearfix poem" id="poem">
+					<li>一轮明月，思念无限</li>
+					<li>一块月饼，合家团圆</li>
+					<li>一声关怀，心心相牵</li>
+					<li>一份相牵，情谊相连</li>
+					<li>一个拥抱，感恩言谢</li>
+					<li>一路走来，你在身边</li>
+					<li>国网湖北省电力公司</li>
+					<li>祝您中秋节快乐！</li>
+				</ul>
+			</div>
 		</section>
 		<section class="page animated">
 			<div class="text animated hinge zoomIn">
@@ -90,6 +93,7 @@
 			var totalLen = $('#totalLen').text() * 1;
 			var $left = $('#left');
 
+			//写祝福弹出键盘导致屏幕变化的调整
 			$(window).on('resize', function() { 
 				var w = $(window).width();
 				var h = $(window).height();
@@ -100,7 +104,6 @@
 					$text.css('top', '25%');
 					$textarea.blur();
 				}
-
 			});
 
 			//写祝福文字限制及提示
@@ -148,49 +151,36 @@
 			var $lis = $('#poem li');
 			$('body').swipe({
 				swipe: function(event, direction, distance, duration, fingerCount) {
-					if (direction == "up" || direction == 'left') { 
+					if (direction == 'left') { 
 						if (index >= 3) { 
 							index = 3;
 						} else { 
 							index++;
-							move(index);
+							toggleAnimate(index);
 						}
 
-						toggleWord(index);
-
-						if (index == 3) { 
-							$('.arrowUp').removeClass('fadeOutUp').addClass('fadeOutDown');
-						}
+						toggleslide(index);
 					}
-					if (direction == 'down' || direction == "right") { 
+					if (direction == "right") { 
 						if (index <= 0) { 
 							index = 0;
 						} else { 
 							index--;
-							move(index);
+							toggleAnimate(index);
 						}
 
-						toggleWord(index);
-
-						if (index == 0) { 
-							$('.arrowUp').removeClass('fadeOutDown').addClass('fadeOutUp');
-						}
+						toggleslide(index);
 					}
 				},
 				threshold: 10
 			});
 
-			function move(index) { 
-				$('.pages').css({ 
-					'-webkit-transform': 'translateY(-' + index * 100 + '%)',
-					'transform': 'translateY(-' + index * 100 + '%)'
-				});
+			function toggleAnimate(index) { 
 				$('.page').eq(index).addClass('active').siblings().removeClass('active');
-
-				$('nav div').css('width', 25 + index * 25 + '%');
 			}
 
 			//第二页typed效果
+			/*
 			function typeWord() { 
 				var len = $lis.length;
 				var li = [], lis = [];
@@ -226,6 +216,35 @@
 			function toggleWord(index) { 
 				if (index == 1) { 
 					typeWord();
+				} else { 
+					restoreImediatly();
+				}
+			}
+			*/
+
+			var li_h = $('#poem li').height();
+			function slide(index) { 
+				var times = 1000;
+				var $lis = $('#poem li');
+				var len = $lis.length;
+
+				$('#poem').css('height', li_h);
+				$lis.height(0);
+
+				for (var i = 0; i < len; i++) { 
+					$lis.eq(i).delay(times * i).animate({ 
+						height: '100%'
+					}, times, 'linear');
+				}
+			}
+
+			function restoreImediatly() { 
+				$('#poem li').height(0).stop();
+			}
+			
+			function toggleslide(index) { 
+				if (index == 1) { 
+					slide();
 				} else { 
 					restoreImediatly();
 				}
