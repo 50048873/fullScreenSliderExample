@@ -194,6 +194,7 @@
 		addEventListener('touchstart', fingerStart, false);
 		addEventListener('touchmove', fingerMove, false);
 		addEventListener('touchend', fingerEnd, false);
+		addEventListener('touchcancel', fingerEnd, false)
 	};
 
 	FullScreenSlider.prototype.setProgressDot = function() { 

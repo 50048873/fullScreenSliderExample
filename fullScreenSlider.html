@@ -32,7 +32,7 @@
 			<img class="s1-9 animated hinge fadeInRightOut" src="img/s1-9.png" alt="tu">
 		</section>
 		<section class="page animated">
-			<!--img class="s2-2" src="img/s2-2.png" alt="tu"-->
+			<img class="s2-2 animated fadeInRight" src="img/s2-2.png" alt="tu">
 			<img class="s2-3 animated fadeInLeft" src="img/s2-3.png" alt="tu">
 			<img class="s2-4 animated fadeInRight" src="img/s2-3.png" alt="tu">
 			<img class="s2-5 animated zoomIn" src="img/s2-4.png" alt="tu">
@@ -48,23 +48,11 @@
 			</ul>
 		</section>
 		<section class="page animated">
-			<div class="text">
-				<ul>
-					<li></li>
-					<li></li>
-					<li></li>
-					<li></li>
-				</ul>
-				<textarea name="" id="wishText" rows="4"></textarea>
-				<!--img class="pen animated hinge fadeInRight" src="img/pen.png" alt="tu"-->
-				<p class="animated hinge fadeInLeft">您还能输入<span id="left">60</span>/<span id="totalLen">60</span>个字符</p>
-			</div>
-
-			<!--div class="text animated hinge fadeInRight">
+			<div class="text animated hinge zoomIn">
 				<textarea name="" id="wishText" rows="4" placeholder="写下您的祝福语："></textarea>
 				<img class="wish-1" src="img/wish-1.png" alt="tu">
-				<p class="animated hinge fadeInLeft">您还能输入<span id="left">60</span>/<span id="totalLen">60</span>个字符</p>
-			</div-->
+				<p>您还能输入<span id="left">60</span>/<span id="totalLen">60</span>个字符</p>
+			</div>
 		
 			<div class="btns animated hinge slideInUp">
 				<a href="" id="share">发送祝福</a>
@@ -88,6 +76,7 @@
 	<script src="bower_components/jquery/dist/jquery.min.js"></script>
 	<script src="bower_components/jquery-touchswipe/jquery.touchSwipe.min.js"></script>
 	<script src="js/fullScreenSlider.js"></script>
+	<script src="js/stateGrid_tooltip.js"></script>
 	<script>
 		$(function() { 
 			$('.page-container').fullScreenSlider({ 
@@ -100,27 +89,18 @@
 			var $textarea = $('#wishText');
 			var totalLen = $('#totalLen').text() * 1;
 			var $left = $('#left');
-			var screen_height = $(window).height();
 
-			//写祝福单击事件
-			$('#page3').swipe({
-				tap: function(event, target) {
-					if (target.tagName == 'TEXTAREA') { 
-						$textarea.focus();
-						$('html').css('height', screen_height);
-					} else { 
-						$textarea.blur();
-						$('html').css('height', '100%');
-					}
-		        }
-			});
-
-			//写祝福键盘事件兼容处理
 			$(window).on('resize', function() { 
-				if ($(window).height() == screen_height) { 
+				var w = $(window).width();
+				var h = $(window).height();
+				var $text = $('.text');
+				if ( w > h) { 
+					$text.css('top', '0');
+				} else { 
+					$text.css('top', '25%');
 					$textarea.blur();
 				}
-				$(window).scrollTop(0);
+
 			});
 
 			//写祝福文字限制及提示
@@ -128,6 +108,7 @@
 				var len = $('textarea').val().length;
 				if (len > totalLen) { 
 					if ($('#sg_tooltip').length) return;
+
 					$.sgTooltip({ 
 						title: '字数长度提示',
 						text: '<p>您最多只能输入' + totalLen + '个字符!</p>',
@@ -196,7 +177,7 @@
 						}
 					}
 				},
-				threshold: 20
+				threshold: 10
 			});
 
 			function move(index) { 
@@ -249,30 +230,6 @@
 					restoreImediatly();
 				}
 			}
-
-			document.addEventListener('touchmove',stopTouchMove,false);
-			function stopTouchMove( e ) {
-		    	e.preventDefault();
-		    }
-
-		    //第5页查看祝福
-		    function addUnderline() { 
-				var h = $('.thumb p').height();
-				var lineH = parseInt($('.thumb p').css('line-height'));
-				var pNum = h / lineH;
-				if (pNum) { 
-					var s = '';
-					for (var i = 0; i < pNum; i++) { 
-						s += '<li>　</li>';
-					}
-					$('ul').html(s);
-				}
-			}
-			addUnderline();
-
-			$(window).on('resize', function() { 
-				addUnderline();
-			});
 		});
 	</script>
 </body>
