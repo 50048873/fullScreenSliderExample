@@ -45,7 +45,7 @@
 		if (this.opts.tb) { 
 			this.$nav.addClass('verticalDot').removeClass('horizontalDot');
 		}
-		$('body').css('display', 'block');
+		$('body').css('opacity', '1');
 	};
 
 	//判断是否第一个元素
